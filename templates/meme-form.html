@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add a new meme</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Add a new meme{% endblock %}
+
+{% block body %}
     <h1>Be creative...ADD A MEME!!!!</h1>
     <form method="post" action="/add_meme">
         Image URL: <input type="text" name="image"/>
@@ -14,5 +13,4 @@
         <br/>
         <input type="submit" value="Add your meme to the hall of fame!!!!!!!"/>
     </form>
-</body>
-</html>
+{% endblock %}

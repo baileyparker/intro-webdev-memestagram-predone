@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>MEMES!!</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}MEMES!!{% endblock %}
+
+{% block body %}
     <h1>Listing of Memes</h1>
     <a href="/meme_form">Add a meme!</a>
     {% if memes == [] %}
@@ -17,5 +16,4 @@
         {%endfor%}
     </ul>
     {%endif%}
-</body>
-</html>
+{% endblock %}

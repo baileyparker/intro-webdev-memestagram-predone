@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your meme!!!</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Your meme!!!{% endblock %}
+
+{% block body %}
     <h1>Here's your meme</h1>
     <img src="{{ url_for('show_image', id=meme['id']) }}" alt="{{meme['caption1']}} {{meme['caption2']}}">
-</body>
-</html>
+{% endblock %}
