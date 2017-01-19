@@ -1,7 +1,34 @@
 {% extends "base.html" %}
-{% block title %}Your meme!!!{% endblock %}
+{% block title %}Memestagram{% endblock %}
 
 {% block body %}
-    <h1>Here's your meme</h1>
-    <img src="{{ url_for('show_image', id=meme['id']) }}" alt="{{meme['caption1']}} {{meme['caption2']}}">
+    <style>
+        .row {
+            margin-top: 2rem;
+        }
+
+        img {
+            min-width: 100%;
+            max-width: 100%;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-7">
+            <div class="card">
+                <a href="{{ url_for('show', id=meme['id']) }}">
+                    <img src="{{ url_for('show_image', id=meme['id']) }}"
+                         alt="{{meme['caption1']}} {{meme['caption2']}}"
+                         class="card-img-top">
+                </a>
+                <div class="card-block">
+                    <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-heart"></i> 0</a>
+                    <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> 0</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <!-- comments will go here!! -->
+        </div>
+    </div>
 {% endblock %}
