@@ -6,6 +6,6 @@
     </a>
     <div class="card-block">
         <a href="{{ url_for('like_meme', id=meme['id']) }}" class="card-link like-link"><i class="fa fa-heart"></i> <span class="count">{{ meme['likes'] }}</span></a>
-        <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> 0</a>
+        <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> {{ meme['num_comments'] }}</a>
     </div>
 </div>

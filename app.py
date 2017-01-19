@@ -32,12 +32,26 @@ def like_meme(id):
     get_db().execute('UPDATE memes SET likes = likes + 1 WHERE id = ?', [id])
     return redirect(request.referrer)
 
+@app.route('/add_comment/<id>', methods=['POST'])
+def add_comment(id):
+    get_db().execute('INSERT INTO comments (meme_id, author, message) VALUES(?, ?, ?);', [
+        id,
+        request.form['author'],
+        request.form['message']
+    ])
+
+    return redirect(url_for('show', id=id))
+
 def get_meme_by_id(id):
     return get_db().select('SELECT * FROM memes WHERE id=?;', [int(id)])[0]
 
 @app.route('/meme/<id>')
 def show(id):
     meme = get_meme_by_id(id)
+    comments = get_db().select('SELECT * FROM comments WHERE meme_id = ?', id)
+    meme['num_comments'] = len(comments)
+    meme['comments'] = comments
+
     return render_template('show.html', meme=meme)
 
 @app.route('/meme/<id>.jpg')
@@ -52,6 +66,9 @@ def meme_form():
 @app.route('/')
 def index():
     memes = get_db().select('SELECT id, url, caption1, caption2, likes FROM memes ORDER BY likes DESC')
+    for meme in memes:
+        meme['num_comments'] = get_db().select('SELECT COUNT(*) AS num FROM comments WHERE meme_id = ?', [int(meme['id'])])[0]['num']
+
     return render_template('homepage.html', memes=memes)
 
 def chunk(l, n):

@@ -11,6 +11,10 @@
             min-width: 100%;
             max-width: 100%;
         }
+
+        h3 {
+            margin-top: 2rem;
+        }
     </style>
 
     <div class="row">
@@ -18,7 +22,31 @@
             {% include 'meme-card.html' %}
         </div>
         <div class="col-5">
-            <!-- comments will go here!! -->
+            <h2>Comments</h2>
+
+            {% for comment in meme['comments'] %}
+                <div class="card">
+                    <div class="card-block">
+                        <strong>{{ comment['author'] }}</strong>
+                        <div>{{ comment['message'] }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <h3>What Do You Think?</h3>
+            <form method="post" action="{{ url_for('add_comment', id=meme['id']) }}">
+                <div class="form-group">
+                    <label for="comment_author">Your Name</label>
+                    <input type="text" name="author" id="comment_author" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="comment_message">Message</label>
+                    <textarea name="message" id="comment_message" class="form-control"></textarea>
+                </div>
+
+                <input type="submit" value="Comment" class="btn btn-primary">
+            </form>
         </div>
     </div>
 {% endblock %}
