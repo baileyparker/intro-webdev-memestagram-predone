@@ -27,6 +27,11 @@ def add_meme():
 
     return redirect(url_for('index'))
 
+@app.route('/like_meme/<id>')
+def like_meme(id):
+    get_db().execute('UPDATE memes SET likes = likes + 1 WHERE id = ?', [id])
+    return redirect(request.referrer)
+
 def get_meme_by_id(id):
     return get_db().select('SELECT * FROM memes WHERE id=?;', [int(id)])[0]
 
@@ -46,7 +51,7 @@ def meme_form():
 
 @app.route('/')
 def index():
-    memes = get_db().select('SELECT id, url, caption1, caption2 FROM memes')
+    memes = get_db().select('SELECT id, url, caption1, caption2, likes FROM memes ORDER BY likes DESC')
     return render_template('homepage.html', memes=memes)
 
 def chunk(l, n):
