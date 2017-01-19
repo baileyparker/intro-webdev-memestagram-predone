@@ -12,8 +12,7 @@
     <ul>
         {%for meme in memes%}
         <li>
-            <div><a href="/meme/{{meme['id']}}">{{meme['caption1']}}</a></div>
-            <div><a href="/meme/{{meme['id']}}">{{meme['caption2']}}</a></div>
+            <a href="/meme/{{meme['id']}}"><img src="/meme/{{meme['id']}}.jpg" alt="{{meme['caption1']}} {{meme['caption2']}}"></a>
         </li>
         {%endfor%}
     </ul>
