@@ -4,6 +4,7 @@ import os
 
 from flask import Flask, render_template, redirect, url_for, request, send_file
 from db import setup_db, get_db
+from io import BytesIO
 from memer import make_meme
 
 
@@ -13,17 +14,21 @@ setup_db(app)
 
 @app.route('/add_meme', methods=['POST'])
 def add_meme():
-    get_db().execute('INSERT INTO memes(url, caption1, caption2) VALUES(?, ?, ?);', (
-        request.form['image'],
-        request.form['top_caption'],
-        request.form['bottom_caption']
+    bg_url = request.form['image']
+    top_caption = request.form['top_caption']
+    bottom_caption = request.form['bottom_caption']
+
+    get_db().execute('INSERT INTO memes(url, caption1, caption2, image) VALUES(?, ?, ?, ?);', (
+        bg_url,
+        top_caption,
+        bottom_caption,
+        make_meme(bg_url, top_caption, bottom_caption).getvalue()
     ))
 
     return redirect(url_for('index'))
 
 def get_meme_by_id(id):
-    return get_db().select('SELECT id, url, caption1, caption2 FROM memes WHERE id=?;',
-                           [int(id)])[0]
+    return get_db().select('SELECT * FROM memes WHERE id=?;', [int(id)])[0]
 
 @app.route('/meme/<id>')
 def show(id):
@@ -33,8 +38,7 @@ def show(id):
 @app.route('/meme/<id>.jpg')
 def show_image(id):
     meme = get_meme_by_id(id)
-    return send_file(make_meme(meme['url'], meme['caption1'], meme['caption2']),
-                     mimetype='image/png')
+    return send_file(BytesIO(meme['image']), mimetype='image/png')
 
 @app.route('/meme_form')
 def meme_form():
