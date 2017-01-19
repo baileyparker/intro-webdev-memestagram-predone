@@ -1,19 +1,39 @@
 {% extends "base.html" %}
 
-{% block title %}MEMES!!{% endblock %}
+{% block title %}Memestagram{% endblock %}
 
 {% block body %}
-    <h1>Listing of Memes</h1>
-    <a href="/meme_form">Add a meme!</a>
+    <style>
+        img {
+            max-width: 100%;
+        }
+
+        .row {
+            margin-top: 1rem !important;
+        }
+    </style>
+
     {% if memes == [] %}
-    There are no memes. Make memes. I'm sad. i need memes. send memes.
+        <p class="text-center">No memes! Why not <a href="{{ url_for('meme_form') }}">make one</a>?
     {%else%}
-    <ul>
-        {%for meme in memes%}
-        <li>
-            <a href="/meme/{{meme['id']}}"><img src="/meme/{{meme['id']}}.jpg" alt="{{meme['caption1']}} {{meme['caption2']}}"></a>
-        </li>
-        {%endfor%}
-    </ul>
-    {%endif%}
+        {% for row_memes in chunk(memes, 3) %}
+            <div class="row">
+                {% for meme in row_memes %}
+                    <div class="col col-4">
+                        <div class="card">
+                            <a href="{{ url_for('show', id=meme['id']) }}">
+                                <img src="{{ url_for('show_image', id=meme['id']) }}"
+                                     alt="{{meme['caption1']}} {{meme['caption2']}}"
+                                     class="card-img-top">
+                            </a>
+                            <div class="card-block">
+                                <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-heart"></i> 0</a>
+                                <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> 0</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

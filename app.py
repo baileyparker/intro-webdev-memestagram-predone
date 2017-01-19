@@ -49,6 +49,12 @@ def index():
     memes = get_db().select('SELECT id, url, caption1, caption2 FROM memes')
     return render_template('homepage.html', memes=memes)
 
+def chunk(l, n):
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+app.jinja_env.globals.update(chunk=chunk)
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('BIND_TO', '127.0.0.1'),
             port=int(os.environ.get('PORT', 5000)),
