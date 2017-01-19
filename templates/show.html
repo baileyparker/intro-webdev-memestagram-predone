@@ -5,29 +5,6 @@
 </head>
 <body>
     <h1>Here's your meme</h1>
-    <canvas id="canvas"></canvas>
-    <script>
-    var canvas = document.getElementById('canvas');
-    var img = new Image();
-    img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        ctx.font = "bold 75px Impact";
-        ctx.fillStyle = 'white';
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillText({{top_caption|tojson|safe}}, canvas.width/2, 0);
-        ctx.strokeText({{top_caption|tojson|safe}}, canvas.width/2, 0);
-        ctx.textBaseline = "bottom";
-        ctx.fillText({{bottom_caption|tojson|safe}}, canvas.width/2, canvas.height);
-        ctx.strokeText({{bottom_caption|tojson|safe}}, canvas.width/2, canvas.height);
-    };
-    img.src = {{meme_img |tojson|safe}};
-    </script>
+    <img src="{{ url_for('show_image', id=meme['id']) }}" alt="{{meme['caption1']}} {{meme['caption2']}}">
 </body>
 </html>

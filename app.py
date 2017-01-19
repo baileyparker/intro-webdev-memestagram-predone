@@ -2,8 +2,10 @@
 
 import os
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, send_file
 from db import setup_db, get_db
+from memer import make_meme
+
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = bool(os.environ.get('FLASK_DEBUG', 1))
@@ -19,12 +21,20 @@ def add_meme():
 
     return redirect(url_for('index'))
 
+def get_meme_by_id(id):
+    return get_db().select('SELECT id, url, caption1, caption2 FROM memes WHERE id=?;',
+                           [int(id)])[0]
+
 @app.route('/meme/<id>')
 def show(id):
-    meme = get_db().select('SELECT id, url, caption1, caption2 FROM memes WHERE id=?;',
-                           [id])[0]
-
+    meme = get_meme_by_id(id)
     return render_template('show.html', meme=meme)
+
+@app.route('/meme/<id>.jpg')
+def show_image(id):
+    meme = get_meme_by_id(id)
+    return send_file(make_meme(meme['url'], meme['caption1'], meme['caption2']),
+                     mimetype='image/png')
 
 @app.route('/meme_form')
 def meme_form():
