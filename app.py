@@ -57,7 +57,7 @@ def show_image(id):
 
 @app.route('/meme_form')
 def meme_form():
-    return render_template('meme-form.html')
+    return render_template('meme-form.html', url=request.args.get('url', ''))
 
 def render_memes_page(order_by):
     memes = get_db().select('SELECT id, url, caption1, caption2, likes FROM memes ORDER BY ' + order_by + ' DESC')

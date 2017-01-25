@@ -8,6 +8,7 @@
     <div class="card-block">
         <a href="{{ url_for('like_meme', id=meme['id']) }}" class="card-link like-link"><i class="fa fa-heart"></i> <span class="count">{{ meme['likes'] }}</span></a>
         <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> {{ meme['num_comments'] }}</a>
+        <a href="{{ url_for('meme_form', url=meme['url']) }}" class="card-link"><i class="fa fa-clone"></i></a>
         <a href="https://twitter.com/share" class="twitter-share-button card-link" data-text="Nice meme!" data-url="{{ url_for('show', id=meme['id'], _external=True) }}" data-show-count="false">Tweet</a>
     </div>
 </div>
