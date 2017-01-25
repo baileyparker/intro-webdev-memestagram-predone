@@ -5,6 +5,12 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css" media="screen">
+    .twitter-share-button-rendered {
+        vertical-align: text-bottom;
+        margin-left: 1.25rem;
+    }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -17,7 +23,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('index') }}">Fresh Memes</a>
+                <a class="nav-link" href="{{ url_for('index') }}">Popular Memes</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('fresh_memes') }}">Fresh Memes</a>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -31,7 +40,11 @@
         {% block body %}{% endblock %}
     </div>
 
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/likes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/render.js') }}"></script>
 </body>
 </html>

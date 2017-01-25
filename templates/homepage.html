@@ -3,8 +3,15 @@
 {% block title %}Memestagram{% endblock %}
 
 {% block body %}
+    <h1>
+        {% if order_by == "id" %}
+        Fresh Memes!
+        {% else %}
+        Popular memes!
+        {% endif %}
+    </h1>
     <style>
-        img {
+        .meme-render {
             max-width: 100%;
         }
 

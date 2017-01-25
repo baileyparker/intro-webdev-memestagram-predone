@@ -1,11 +1,13 @@
 <div class="card">
     <a href="{{ url_for('show', id=meme['id']) }}">
-        <img src="{{ url_for('show_image', id=meme['id']) }}"
-             alt="{{meme['caption1']}} {{meme['caption2']}}"
-             class="card-img-top">
+        <canvas data-src="{{meme['url']}}"
+             data-top-caption="{{meme['caption1']}}"
+             data-bottom-caption="{{meme['caption2']}}"
+             class="card-img-top meme-render"></canvas>
     </a>
     <div class="card-block">
         <a href="{{ url_for('like_meme', id=meme['id']) }}" class="card-link like-link"><i class="fa fa-heart"></i> <span class="count">{{ meme['likes'] }}</span></a>
         <a href="{{ url_for('show', id=meme['id']) }}" class="card-link"><i class="fa fa-comment"></i> {{ meme['num_comments'] }}</a>
+        <a href="https://twitter.com/share" class="twitter-share-button card-link" data-text="Nice meme!" data-url="{{ url_for('show', id=meme['id'], _external=True) }}" data-show-count="false">Tweet</a>
     </div>
 </div>

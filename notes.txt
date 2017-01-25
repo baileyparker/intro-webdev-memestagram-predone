@@ -6,6 +6,10 @@ heroku run bash -c 'psql $DATABASE_URL'
 
 sqlite3 database.sqlite3
 
-CREATE TABLE memes(id SERIAL, url TEXT, caption1 TEXT, caption2 TEXT);
-CREATE TABLE memes(id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, caption1 TEXT, caption2 TEXT);
+CREATE TABLE memes(id SERIAL, url TEXT, caption1 TEXT, caption2 TEXT, likes INTEGER DEFAULT 0);
+CREATE TABLE memes(id INTEGER PRIMARY KEY AUTOINCREMENT, url TEXT, caption1 TEXT, caption2 TEXT, likes INTEGER DEFAULT 0);
 DROP TABLE memes;
+
+CREATE TABLE comments (id SERIAL, meme_id INTEGER, author TEXT, message TEXT);
+CREATE TABLE comments (id INTEGER PRIMARY KEY AUTOINCREMENT, meme_id INTEGER, author TEXT, message TEXT);
+

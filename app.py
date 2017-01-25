@@ -4,9 +4,6 @@ import os
 
 from flask import Flask, render_template, redirect, url_for, request, send_file
 from db import setup_db, get_db
-from io import BytesIO
-from memer import make_meme
-
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = bool(os.environ.get('FLASK_DEBUG', 1))
@@ -18,11 +15,10 @@ def add_meme():
     top_caption = request.form['top_caption']
     bottom_caption = request.form['bottom_caption']
 
-    get_db().execute('INSERT INTO memes(url, caption1, caption2, image) VALUES(?, ?, ?, ?);', (
+    get_db().execute('INSERT INTO memes(url, caption1, caption2) VALUES(?, ?, ?);', (
         bg_url,
         top_caption,
         bottom_caption,
-        make_meme(bg_url, top_caption, bottom_caption).getvalue()
     ))
 
     return redirect(url_for('index'))
@@ -63,13 +59,20 @@ def show_image(id):
 def meme_form():
     return render_template('meme-form.html')
 
-@app.route('/')
-def index():
-    memes = get_db().select('SELECT id, url, caption1, caption2, likes FROM memes ORDER BY likes DESC')
+def render_memes_page(order_by):
+    memes = get_db().select('SELECT id, url, caption1, caption2, likes FROM memes ORDER BY ' + order_by + ' DESC')
     for meme in memes:
         meme['num_comments'] = get_db().select('SELECT COUNT(*) AS num FROM comments WHERE meme_id = ?', [int(meme['id'])])[0]['num']
 
-    return render_template('homepage.html', memes=memes)
+    return render_template('homepage.html', memes=memes, order_by=order_by)
+
+@app.route('/')
+def index():
+    return render_memes_page(order_by='likes')
+
+@app.route('/fresh')
+def fresh_memes():
+    return render_memes_page(order_by='id')
 
 def chunk(l, n):
     for i in range(0, len(l), n):
