@@ -5,4 +5,3 @@ Jinja2==2.9.4
 MarkupSafe==0.23
 psycopg2==2.6.2
 Werkzeug==0.11.15
-wand==0.4.4

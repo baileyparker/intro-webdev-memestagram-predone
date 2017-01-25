@@ -1,7 +1,6 @@
 heroku ps:scale web=1
 
 heroku addons:create heroku-postgresql:hobby-dev
-heroku pg:wait
 heroku run bash -c 'psql $DATABASE_URL'
 
 sqlite3 database.sqlite3
