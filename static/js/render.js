@@ -3,15 +3,14 @@ function renderMeme(canvas) {
     var top_caption = canvas.getAttribute('data-top-caption');
     var bottom_caption = canvas.getAttribute('data-bottom-caption');
     img.onload = function() {
-        console.log(canvas);
         canvas.width = img.width;
         canvas.height = img.height;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
-        ctx.font = "bold 75px Impact";
+        ctx.font = "bold " + Math.round(img.height * 0.25) + "px Impact";
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = Math.round(img.height * 0.005);
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillText(top_caption, canvas.width/2, 0, canvas.width);
